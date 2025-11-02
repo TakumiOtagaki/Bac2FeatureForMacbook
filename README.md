@@ -1,3 +1,7 @@
+# はじめに
+これは私が自分の MacBook で利用したくて改変したものなので、あまり信用して利用しないでください。
+Please note that this repo is a modified version for my local MacBook environment, and may not be reliable.
+
 # Bac2Feature
 
 ![version](https://img.shields.io/badge/version-1.1-blue)
