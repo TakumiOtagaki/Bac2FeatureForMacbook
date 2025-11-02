@@ -1,6 +1,7 @@
 ### library ###
 from os.path import join
 import subprocess
+import shutil
 
 import pandas as pd
 
@@ -32,7 +33,13 @@ def predict_by_homology(
 def call_blast(
     ref_blastdb:str, input_fasta:str, blast_result_path:str, threads:int) -> None:
     """Call BLASTn for homology search."""
-    cmd = ['blastn',
+    blastn_path = shutil.which('blastn')
+    if blastn_path is None:
+        raise RuntimeError(
+            "blastn executable not found on PATH. Install BLAST+ (e.g. `brew install blast` "
+            "or `conda install -c bioconda blast`) and retry."
+        )
+    cmd = [blastn_path,
            '-db', ref_blastdb,
            '-query', input_fasta,
            '-out', blast_result_path,
