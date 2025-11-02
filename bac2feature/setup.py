@@ -11,13 +11,14 @@ setup(
     author_email='fujiyoshi-masaki353@g.ecc.u-tokyo.ac.jp',
     url='',
     license='GPL-3.0',
-    packages=find_packages(),
+    packages=find_packages(where="bac2feature"),
+    package_dir={"": "bac2feature"},
     entry_points={
         'console_scripts': [
             'bac2feature = bac2feature.cmd.bac2feature:main'
         ]},
     include_package_data=True,
-    install_requires=[],
-    setup_requires=[],
-    tests_require=[]
+    install_requires=[
+        'pandas>=1.3',
+    ]
 )

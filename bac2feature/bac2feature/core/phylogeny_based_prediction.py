@@ -3,7 +3,6 @@ from os.path import dirname, join
 import subprocess
 
 import pandas as pd
-from picrust2.place_seqs import place_seqs_pipeline
 
 import bac2feature.core.default as default
 
@@ -17,6 +16,7 @@ def predict_by_phylogeny(
     """
     Predict microbial traits from fasta file by phylogenetic placement and ASR.
     """
+    place_seqs_pipeline = _get_place_seqs_pipeline()
     out_tree = join(intermediate_dir, 'placed_seqs.tre')
     # Phylogenetic placement by PICRUSt2's pipeline
     place_seqs_pipeline(study_fasta=input_fasta,
@@ -117,3 +117,15 @@ def filter_predictions_by_nsti(
     # Save filtered predictions
     predictions.to_csv(prediction_path, sep='\t', index=False)
     return
+
+
+def _get_place_seqs_pipeline():
+    try:
+        from picrust2.place_seqs import place_seqs_pipeline
+    except ImportError as exc:
+        raise RuntimeError(
+            "picrust2 is required for phylogeny-based prediction. "
+            "Install it from the official PICRUSt2 distribution (e.g. `mamba install -c bioconda picrust2`) "
+            "and rerun the command inside that environment."
+        ) from exc
+    return place_seqs_pipeline
