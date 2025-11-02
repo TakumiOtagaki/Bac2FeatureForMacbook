@@ -1,0 +1,25 @@
+name: qiime2-2023.5
+channels:
+  - qiime2/label/r2023.5
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.9
+  - qiime2=2023.5.*
+  - q2cli=2023.5.*
+  - q2templates=2023.5.*
+  - q2-feature-table=2023.5.*
+  - q2-feature-classifier=2023.5.*
+  - q2-metadata=2023.5.*
+  - q2-phylogeny=2023.5.*
+  - q2-taxa=2023.5.*
+  - q2-diversity=2023.5.*
+  - q2-alignment=2023.5.*
+  - biom-format>=2.1
+  - scikit-learn>=1.2,<1.5
+  - numpy>=1.21
+  - pandas>=1.5
+  - scipy>=1.9
+  - setuptools
+  - pip

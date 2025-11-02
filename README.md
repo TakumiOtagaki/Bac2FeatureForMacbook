@@ -53,11 +53,12 @@ conda env create --name bac2feature --file environment/env_bac2feature_macos.yml
 conda activate bac2feature
 
 # (Optional) Create Conda environment for taxonomy-based prediction
+# Linux:
 conda create --name qiime2-2023.5 --file environment/env_qiime2-2023.5-py38-linux-conda.txt
-
-# (Optional / macOS) Fetch the matching QIIME 2 environment from https://docs.qiime2.org/
-# curl -sSL https://data.qiime2.org/distro/core/qiime2-2023.5-py39-osx-conda.yml -o qiime2-2023.5-py39-osx-conda.yml
-# conda env create -n qiime2-2023.5 -f qiime2-2023.5-py39-osx-conda.yml
+# macOS:
+#   export CONDA_SUBDIR=osx-64
+#   conda env create --file environment/env_qiime2-2023.5-py39-osx-conda.yml
+#   unset CONDA_SUBDIR
 
 # Install Bac2Feature command line (execute at this directory Bac2Feature)
 pip install bac2feature

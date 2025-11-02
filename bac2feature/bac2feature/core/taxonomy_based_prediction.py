@@ -2,7 +2,9 @@
 import decimal
 import json
 from os.path import join
+import shutil
 import subprocess
+from pathlib import Path
 
 import pandas as pd
 
@@ -34,6 +36,11 @@ def call_qiime_taxonomic_assignment(
     input_fasta: str, out_taxonomy: str,
     ref_nb_classifier: str, qiime_env:str, threads:int) -> None:
     script_path = join(default.b2f_core_dir, 'qiime_taxonomic_assignment.sh')
+    if shutil.which('conda') is None:
+        raise RuntimeError(
+            "conda executable not found on PATH. Install Miniconda/Mamba and ensure "
+            "`conda run --name {}` can access QIIME2.".format(qiime_env)
+        )
     cmd = ['conda',
            'run',
            '--name',
@@ -48,7 +55,20 @@ def call_qiime_taxonomic_assignment(
            '-t',
            str(threads)
            ]
-    subprocess.run(cmd)
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise RuntimeError(
+            "QIIME2 command failed (exit code {}).\nSTDOUT:\n{}\nSTDERR:\n{}".format(
+                result.returncode, result.stdout.strip(), result.stderr.strip()
+            )
+        )
+    if not Path(out_taxonomy).exists():
+        raise RuntimeError(
+            "QIIME2 taxonomy output was not created at {}. "
+            "Verify that the QIIME2 environment `{}` contains the required commands.".format(
+                out_taxonomy, qiime_env
+            )
+        )
     return
 
 def predict_by_emp_dist(
