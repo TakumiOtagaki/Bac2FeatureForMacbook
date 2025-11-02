@@ -40,11 +40,24 @@ conda config --append channels conda-forge
 conda config --append channels bioconda
 
 # Create Conda environment
+#   Linux:
 conda create --name bac2feature --file environment/env_bac2feature.txt
+#   macOS (avoids Linux-only packages; tested on Apple silicon):
+conda env create --name bac2feature --file environment/env_bac2feature_macos.yml
+#   Apple silicon tip (Rosetta x86_64 build):
+#     export CONDA_SUBDIR=osx-64
+#     conda env create --name bac2feature --file environment/env_bac2feature_macos.yml
+#     unset CONDA_SUBDIR
+
+# Activate environment (after creation)
 conda activate bac2feature
 
 # (Optional) Create Conda environment for taxonomy-based prediction
 conda create --name qiime2-2023.5 --file environment/env_qiime2-2023.5-py38-linux-conda.txt
+
+# (Optional / macOS) Fetch the matching QIIME 2 environment from https://docs.qiime2.org/
+# curl -sSL https://data.qiime2.org/distro/core/qiime2-2023.5-py39-osx-conda.yml -o qiime2-2023.5-py39-osx-conda.yml
+# conda env create -n qiime2-2023.5 -f qiime2-2023.5-py39-osx-conda.yml
 
 # Install Bac2Feature command line (execute at this directory Bac2Feature)
 pip install bac2feature
