@@ -61,6 +61,23 @@ conda create --name qiime2-2023.5 --file environment/env_qiime2-2023.5-py38-linu
 
 # Install Bac2Feature command line (execute at this directory Bac2Feature)
 pip install bac2feature
+# or with uv (https://github.com/astral-sh/uv)
+uv pip install bac2feature
+# For local development using uv:
+# uv venv .venv && source .venv/bin/activate && uv pip install -e .
+
+# Quick smoke test (homology method does not require PICRUSt2):
+bac2feature --method homology -s test_seqs.fasta -o predicted_traits.tsv
+
+# The homology method requires the BLAST+ command-line tools. On macOS you can install them with:
+#   brew install blast
+# or with conda/mamba:
+#   conda install -c bioconda blast
+
+# The phylogeny-based prediction requires additional tooling that is not available on PyPI,
+# including PICRUSt2 (install via `mamba install -c bioconda picrust2`), epa-ng, gappa,
+# and R packages (castor, ape). Run `bac2feature --method phylogeny ...` only inside an
+# environment where these tools are installed.
 
 # Print help message
 bac2feature -h
