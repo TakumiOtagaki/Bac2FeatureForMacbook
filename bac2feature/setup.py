@@ -18,6 +18,13 @@ setup(
             'bac2feature = bac2feature.cmd.bac2feature:main'
         ]},
     include_package_data=True,
+    package_data={
+        'bac2feature': [
+            'data/*',
+            'data/*/*',
+            'data/*/*/*',
+        ],
+    },
     install_requires=[
         'pandas>=1.3',
     ]
